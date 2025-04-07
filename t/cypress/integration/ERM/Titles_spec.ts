@@ -400,17 +400,21 @@ describe("Title CRUD operations", () => {
 
         let related_package = erm_title.resources[0];
         // cy.get("#package_list tbody tr:first td a").contains("first package name").click();
-        cy.intercept(
-            "GET",
-            "/api/v1/erm/eholdings/local/resources*",
-            related_package
-        ).as("get-related-package");
+        cy.intercept("GET", "/api/v1/erm/eholdings/local/resources*", [
+            related_package,
+        ]).as("get-related-package");
         // List packages
         cy.visit("/cgi-bin/koha/erm/eholdings/local/titles/1");
         cy.wait("@get-related-package");
         cy.contains("Packages");
         cy.wait(500);
 
+        cy.intercept(
+            "GET",
+            "/api/v1/erm/eholdings/local/resources/" +
+                related_package.resource_id,
+            related_package
+        );
         cy.get("#package_relationship_list table")
             .contains("first package name")
             .click();

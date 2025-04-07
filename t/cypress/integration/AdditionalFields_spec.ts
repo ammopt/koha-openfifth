@@ -504,15 +504,15 @@ describe("Additional Fields operations", () => {
         });
         cy.intercept("GET", "/api/v1/erm/licenses/*", license);
         cy.visit("/cgi-bin/koha/erm/licenses");
-        cy.get("#licenses_list").contains("Showing 1 to 1 of 1 entries");
+        cy.get("#license_list").contains("Showing 1 to 1 of 1 entries");
 
-        cy.get("#licenses_list table tbody tr:first").contains(
+        cy.get("#license_list table tbody tr:first").contains(
             get_description_from_av_value(
                 av_cats,
                 license.extended_attributes[4]
             )
         );
-        cy.get("#licenses_list table tbody tr:first").contains(
+        cy.get("#license_list table tbody tr:first").contains(
             get_description_from_av_value(
                 av_cats,
                 license.extended_attributes[0]
@@ -558,9 +558,9 @@ describe("Additional Fields operations", () => {
 
         //Empty additional fields, should not display
         cy.visit("/cgi-bin/koha/erm/licenses");
-        cy.get("#licenses_list table tbody tr:first td:first a").click();
+        cy.get("#license_list table tbody tr:first td:first a").click();
         cy.wait("@get-empty-license");
-        cy.get("#licenses_show #additional_fields").should("not.exist");
+        cy.get("#license_show #additional_fields").should("not.exist");
 
         cy.intercept("GET", "/api/v1/extended_attribute_types*", {
             body: license_additional_fields,
@@ -586,16 +586,16 @@ describe("Additional Fields operations", () => {
 
         // There are additional fields, fieldset should exist
         cy.visit("/cgi-bin/koha/erm/licenses");
-        cy.get("#licenses_list table tbody tr:first td:first a").click();
+        cy.get("#license_list table tbody tr:first td:first a").click();
         cy.wait("@get-license");
-        cy.get("#licenses_show #additional_fields").should("exist");
+        cy.get("#license_show #additional_fields").should("exist");
 
         // All fields are presented correctly
         cy.get(
-            "#licenses_show #additional_fields label[for='additional_field_1']"
+            "#license_show #additional_fields label[for='additional_field_1']"
         ).contains(license_additional_fields[0].name);
         cy.get(
-            "#licenses_show #additional_fields label[for='additional_field_1']"
+            "#license_show #additional_fields label[for='additional_field_1']"
         )
             .parent()
             .children("span")
@@ -612,30 +612,30 @@ describe("Additional Fields operations", () => {
             );
 
         cy.get(
-            "#licenses_show #additional_fields label[for='additional_field_2']"
+            "#license_show #additional_fields label[for='additional_field_2']"
         ).contains(license_additional_fields[1].name);
         cy.get(
-            "#licenses_show #additional_fields label[for='additional_field_2']"
+            "#license_show #additional_fields label[for='additional_field_2']"
         )
             .parent()
             .children("span")
             .contains(license.extended_attributes[2].value);
 
         cy.get(
-            "#licenses_show #additional_fields label[for='additional_field_3']"
+            "#license_show #additional_fields label[for='additional_field_3']"
         ).contains(license_additional_fields[2].name);
         cy.get(
-            "#licenses_show #additional_fields label[for='additional_field_3']"
+            "#license_show #additional_fields label[for='additional_field_3']"
         )
             .parent()
             .children("span")
             .contains(license.extended_attributes[3].value);
 
         cy.get(
-            "#licenses_show #additional_fields label[for='additional_field_4']"
+            "#license_show #additional_fields label[for='additional_field_4']"
         ).contains(license_additional_fields[3].name);
         cy.get(
-            "#licenses_show #additional_fields label[for='additional_field_4']"
+            "#license_show #additional_fields label[for='additional_field_4']"
         )
             .parent()
             .children("span")
@@ -664,7 +664,7 @@ describe("Additional Fields operations", () => {
 
         // No additional fields, fieldset should not exist
         cy.visit("/cgi-bin/koha/erm/licenses/add");
-        cy.get("#licenses_add form #additional_fields").should("not.exist");
+        cy.get("#license_add form #additional_fields").should("not.exist");
 
         cy.intercept("GET", "/api/v1/extended_attribute_types*", {
             body: license_additional_fields,
@@ -685,20 +685,20 @@ describe("Additional Fields operations", () => {
         ).as("avcategories");
         // There are additional fields, fieldset should exist
         cy.visit("/cgi-bin/koha/erm/licenses/add");
-        cy.get("#licenses_add form #additional_fields").should("exist");
+        cy.get("#license_add form #additional_fields").should("exist");
 
         // All additional fields should be listed
         cy.get(
-            "#licenses_add form #additional_fields label[for='additional_field_1']"
+            "#license_add form #additional_fields label[for='additional_field_1']"
         ).contains(license_additional_fields[0].name);
         cy.get(
-            "#licenses_add form #additional_fields label[for='additional_field_2']"
+            "#license_add form #additional_fields label[for='additional_field_2']"
         ).contains(license_additional_fields[1].name);
         cy.get(
-            "#licenses_add form #additional_fields label[for='additional_field_3']"
+            "#license_add form #additional_fields label[for='additional_field_3']"
         ).contains(license_additional_fields[2].name);
         cy.get(
-            "#licenses_add form #additional_fields label[for='additional_field_4']"
+            "#license_add form #additional_fields label[for='additional_field_4']"
         ).contains(license_additional_fields[3].name);
 
         cy.get("#additional_fields #additional_field_1 .vs__selected").should(
@@ -804,7 +804,7 @@ describe("Additional Fields operations", () => {
         ).as("avcategories");
 
         cy.visit("/cgi-bin/koha/erm/licenses");
-        cy.get("#licenses_list table tbody tr:first").contains("Edit").click();
+        cy.get("#license_list table tbody tr:first").contains("Edit").click();
         cy.wait("@get-license");
         cy.wait(500); // Cypress is too fast! Vue hasn't populated the form yet!
 
@@ -823,14 +823,14 @@ describe("Additional Fields operations", () => {
         );
 
         cy.get(
-            "#licenses_add form #additional_fields label[for='additional_field_2']"
+            "#license_add form #additional_fields label[for='additional_field_2']"
         )
             .parent()
             .children("input")
             .should("have.value", license.extended_attributes[2].value);
 
         cy.get(
-            "#licenses_add form #additional_fields label[for='additional_field_3']"
+            "#license_add form #additional_fields label[for='additional_field_3']"
         )
             .parent()
             .children("input")
@@ -845,13 +845,13 @@ describe("Additional Fields operations", () => {
 
         // Clear text field works
         cy.get(
-            "#licenses_add form #additional_fields label[for='additional_field_2']"
+            "#license_add form #additional_fields label[for='additional_field_2']"
         )
             .parent()
             .children(".clear_attribute")
             .click();
         cy.get(
-            "#licenses_add form #additional_fields label[for='additional_field_2']"
+            "#license_add form #additional_fields label[for='additional_field_2']"
         )
             .parent()
             .children("input")
@@ -859,16 +859,16 @@ describe("Additional Fields operations", () => {
 
         // "+New" text field works
         cy.get(
-            "#licenses_add form #additional_fields label[for='additional_field_3']"
+            "#license_add form #additional_fields label[for='additional_field_3']"
         ).should("have.length", 1);
         cy.get(
-            "#licenses_add form #additional_fields label[for='additional_field_3']"
+            "#license_add form #additional_fields label[for='additional_field_3']"
         )
             .parent()
             .children(".clone_attribute")
             .click();
         cy.get(
-            "#licenses_add form #additional_fields label[for='additional_field_3']"
+            "#license_add form #additional_fields label[for='additional_field_3']"
         ).should("have.length", 2);
     });
 
@@ -897,15 +897,15 @@ describe("Additional Fields operations", () => {
         });
         cy.intercept("GET", "/api/v1/erm/agreements/*", agreement);
         cy.visit("/cgi-bin/koha/erm/agreements");
-        cy.get("#agreements_list").contains("Showing 1 to 1 of 1 entries");
+        cy.get("#agreement_list").contains("Showing 1 to 1 of 1 entries");
 
-        cy.get("#agreements_list table tbody tr:first").contains(
+        cy.get("#agreement_list table tbody tr:first").contains(
             get_description_from_av_value(
                 av_cats,
                 agreement.extended_attributes[4]
             )
         );
-        cy.get("#agreements_list table tbody tr:first").contains(
+        cy.get("#agreement_list table tbody tr:first").contains(
             get_description_from_av_value(
                 av_cats,
                 agreement.extended_attributes[0]
@@ -951,9 +951,9 @@ describe("Additional Fields operations", () => {
 
         //Empty additional fields, should not display
         cy.visit("/cgi-bin/koha/erm/agreements");
-        cy.get("#agreements_list table tbody tr:first td:first a").click();
+        cy.get("#agreement_list table tbody tr:first td:first a").click();
         cy.wait("@get-empty-agreement");
-        cy.get("#agreements_show #additional_fields").should("not.exist");
+        cy.get("#agreement_show #additional_fields").should("not.exist");
 
         cy.intercept("GET", "/api/v1/extended_attribute_types*", {
             body: agreement_additional_fields,
@@ -979,16 +979,16 @@ describe("Additional Fields operations", () => {
 
         // There are additional fields, fieldset should exist
         cy.visit("/cgi-bin/koha/erm/agreements");
-        cy.get("#agreements_list table tbody tr:first td:first a").click();
+        cy.get("#agreement_list table tbody tr:first td:first a").click();
         cy.wait("@get-agreement");
-        cy.get("#agreements_show #additional_fields").should("exist");
+        cy.get("#agreement_show #additional_fields").should("exist");
 
         // All fields are presented correctly
         cy.get(
-            "#agreements_show #additional_fields label[for='additional_field_1']"
+            "#agreement_show #additional_fields label[for='additional_field_1']"
         ).contains(agreement_additional_fields[0].name);
         cy.get(
-            "#agreements_show #additional_fields label[for='additional_field_1']"
+            "#agreement_show #additional_fields label[for='additional_field_1']"
         )
             .parent()
             .children("span")
@@ -1005,30 +1005,30 @@ describe("Additional Fields operations", () => {
             );
 
         cy.get(
-            "#agreements_show #additional_fields label[for='additional_field_2']"
+            "#agreement_show #additional_fields label[for='additional_field_2']"
         ).contains(agreement_additional_fields[1].name);
         cy.get(
-            "#agreements_show #additional_fields label[for='additional_field_2']"
+            "#agreement_show #additional_fields label[for='additional_field_2']"
         )
             .parent()
             .children("span")
             .contains(agreement.extended_attributes[2].value);
 
         cy.get(
-            "#agreements_show #additional_fields label[for='additional_field_3']"
+            "#agreement_show #additional_fields label[for='additional_field_3']"
         ).contains(agreement_additional_fields[2].name);
         cy.get(
-            "#agreements_show #additional_fields label[for='additional_field_3']"
+            "#agreement_show #additional_fields label[for='additional_field_3']"
         )
             .parent()
             .children("span")
             .contains(agreement.extended_attributes[3].value);
 
         cy.get(
-            "#agreements_show #additional_fields label[for='additional_field_4']"
+            "#agreement_show #additional_fields label[for='additional_field_4']"
         ).contains(agreement_additional_fields[3].name);
         cy.get(
-            "#agreements_show #additional_fields label[for='additional_field_4']"
+            "#agreement_show #additional_fields label[for='additional_field_4']"
         )
             .parent()
             .children("span")
@@ -1057,7 +1057,7 @@ describe("Additional Fields operations", () => {
 
         // No additional fields, fieldset should not exist
         cy.visit("/cgi-bin/koha/erm/agreements/add");
-        cy.get("#agreements_add form #additional_fields").should("not.exist");
+        cy.get("#agreement_add form #additional_fields").should("not.exist");
 
         cy.intercept("GET", "/api/v1/extended_attribute_types*", {
             body: agreement_additional_fields,
@@ -1078,20 +1078,20 @@ describe("Additional Fields operations", () => {
         ).as("avcategories");
         // There are additional fields, fieldset should exist
         cy.visit("/cgi-bin/koha/erm/agreements/add");
-        cy.get("#agreements_add form #additional_fields").should("exist");
+        cy.get("#agreement_add form #additional_fields").should("exist");
 
         // All additional fields should be listed
         cy.get(
-            "#agreements_add form #additional_fields label[for='additional_field_1']"
+            "#agreement_add form #additional_fields label[for='additional_field_1']"
         ).contains(agreement_additional_fields[0].name);
         cy.get(
-            "#agreements_add form #additional_fields label[for='additional_field_2']"
+            "#agreement_add form #additional_fields label[for='additional_field_2']"
         ).contains(agreement_additional_fields[1].name);
         cy.get(
-            "#agreements_add form #additional_fields label[for='additional_field_3']"
+            "#agreement_add form #additional_fields label[for='additional_field_3']"
         ).contains(agreement_additional_fields[2].name);
         cy.get(
-            "#agreements_add form #additional_fields label[for='additional_field_4']"
+            "#agreement_add form #additional_fields label[for='additional_field_4']"
         ).contains(agreement_additional_fields[3].name);
 
         cy.get("#additional_fields #additional_field_1 .vs__selected").should(
@@ -1197,9 +1197,7 @@ describe("Additional Fields operations", () => {
         ).as("avcategories");
 
         cy.visit("/cgi-bin/koha/erm/agreements");
-        cy.get("#agreements_list table tbody tr:first")
-            .contains("Edit")
-            .click();
+        cy.get("#agreement_list table tbody tr:first").contains("Edit").click();
         cy.wait("@get-agreement");
         cy.wait(500); // Cypress is too fast! Vue hasn't populated the form yet!
 
@@ -1218,14 +1216,14 @@ describe("Additional Fields operations", () => {
         );
 
         cy.get(
-            "#agreements_add form #additional_fields label[for='additional_field_2']"
+            "#agreement_add form #additional_fields label[for='additional_field_2']"
         )
             .parent()
             .children("input")
             .should("have.value", agreement.extended_attributes[2].value);
 
         cy.get(
-            "#agreements_add form #additional_fields label[for='additional_field_3']"
+            "#agreement_add form #additional_fields label[for='additional_field_3']"
         )
             .parent()
             .children("input")
@@ -1240,13 +1238,13 @@ describe("Additional Fields operations", () => {
 
         // Clear text field works
         cy.get(
-            "#agreements_add form #additional_fields label[for='additional_field_2']"
+            "#agreement_add form #additional_fields label[for='additional_field_2']"
         )
             .parent()
             .children(".clear_attribute")
             .click();
         cy.get(
-            "#agreements_add form #additional_fields label[for='additional_field_2']"
+            "#agreement_add form #additional_fields label[for='additional_field_2']"
         )
             .parent()
             .children("input")
@@ -1254,16 +1252,16 @@ describe("Additional Fields operations", () => {
 
         // "+New" text field works
         cy.get(
-            "#agreements_add form #additional_fields label[for='additional_field_3']"
+            "#agreement_add form #additional_fields label[for='additional_field_3']"
         ).should("have.length", 1);
         cy.get(
-            "#agreements_add form #additional_fields label[for='additional_field_3']"
+            "#agreement_add form #additional_fields label[for='additional_field_3']"
         )
             .parent()
             .children(".clone_attribute")
             .click();
         cy.get(
-            "#agreements_add form #additional_fields label[for='additional_field_3']"
+            "#agreement_add form #additional_fields label[for='additional_field_3']"
         ).should("have.length", 2);
     });
 
@@ -1297,15 +1295,15 @@ describe("Additional Fields operations", () => {
             eholdings_package
         );
         cy.visit("/cgi-bin/koha/erm/eholdings/local/packages");
-        cy.get("#packages_list").contains("Showing 1 to 1 of 1 entries");
+        cy.get("#package_list").contains("Showing 1 to 1 of 1 entries");
 
-        cy.get("#packages_list table tbody tr:first").contains(
+        cy.get("#package_list table tbody tr:first").contains(
             get_description_from_av_value(
                 av_cats,
                 eholdings_package.extended_attributes[0]
             )
         );
-        cy.get("#packages_list table tbody tr:first").contains(
+        cy.get("#package_list table tbody tr:first").contains(
             get_description_from_av_value(
                 av_cats,
                 eholdings_package.extended_attributes[0]
@@ -1354,9 +1352,9 @@ describe("Additional Fields operations", () => {
 
         //Empty additional fields, should not display
         cy.visit("/cgi-bin/koha/erm/eholdings/local/packages");
-        cy.get("#packages_list table tbody tr:first td:first a").click();
+        cy.get("#package_list table tbody tr:first td:first a").click();
         cy.wait("@get-empty-eholdings-package");
-        cy.get("#packages_list #additional_fields").should("not.exist");
+        cy.get("#package_list #additional_fields").should("not.exist");
 
         cy.intercept("GET", "/api/v1/extended_attribute_types*", {
             body: eholdings_package_additional_fields,
@@ -1384,16 +1382,16 @@ describe("Additional Fields operations", () => {
 
         // There are additional fields, fieldset should exist
         cy.visit("/cgi-bin/koha/erm/eholdings/local/packages");
-        cy.get("#packages_list table tbody tr:first td:first a").click();
+        cy.get("#package_list table tbody tr:first td:first a").click();
         cy.wait("@get-eholdings-package");
-        cy.get("#packages_show #additional_fields").should("exist");
+        cy.get("#package_show #additional_fields").should("exist");
 
         // All fields are presented correctly
         cy.get(
-            "#packages_show #additional_fields label[for='additional_field_1']"
+            "#package_show #additional_fields label[for='additional_field_1']"
         ).contains(eholdings_package_additional_fields[0].name);
         cy.get(
-            "#packages_show #additional_fields label[for='additional_field_1']"
+            "#package_show #additional_fields label[for='additional_field_1']"
         )
             .parent()
             .children("span")
@@ -1410,30 +1408,30 @@ describe("Additional Fields operations", () => {
             );
 
         cy.get(
-            "#packages_show #additional_fields label[for='additional_field_2']"
+            "#package_show #additional_fields label[for='additional_field_2']"
         ).contains(eholdings_package_additional_fields[1].name);
         cy.get(
-            "#packages_show #additional_fields label[for='additional_field_2']"
+            "#package_show #additional_fields label[for='additional_field_2']"
         )
             .parent()
             .children("span")
             .contains(eholdings_package.extended_attributes[2].value);
 
         cy.get(
-            "#packages_show #additional_fields label[for='additional_field_3']"
+            "#package_show #additional_fields label[for='additional_field_3']"
         ).contains(eholdings_package_additional_fields[2].name);
         cy.get(
-            "#packages_show #additional_fields label[for='additional_field_3']"
+            "#package_show #additional_fields label[for='additional_field_3']"
         )
             .parent()
             .children("span")
             .contains(eholdings_package.extended_attributes[3].value);
 
         cy.get(
-            "#packages_show #additional_fields label[for='additional_field_4']"
+            "#package_show #additional_fields label[for='additional_field_4']"
         ).contains(eholdings_package_additional_fields[3].name);
         cy.get(
-            "#packages_show #additional_fields label[for='additional_field_4']"
+            "#package_show #additional_fields label[for='additional_field_4']"
         )
             .parent()
             .children("span")
@@ -1463,7 +1461,7 @@ describe("Additional Fields operations", () => {
 
         // No additional fields, fieldset should not exist
         cy.visit("/cgi-bin/koha/erm/eholdings/local/packages/add");
-        cy.get("#packages_add form #additional_fields").should("not.exist");
+        cy.get("#package_add form #additional_fields").should("not.exist");
 
         cy.intercept("GET", "/api/v1/extended_attribute_types*", {
             body: eholdings_package_additional_fields,
@@ -1484,20 +1482,20 @@ describe("Additional Fields operations", () => {
         ).as("avcategories");
         // There are additional fields, fieldset should exist
         cy.visit("/cgi-bin/koha/erm/eholdings/local/packages/add");
-        cy.get("#packages_add form #additional_fields").should("exist");
+        cy.get("#package_add form #additional_fields").should("exist");
 
         // All additional fields should be listed
         cy.get(
-            "#packages_add form #additional_fields label[for='additional_field_1']"
+            "#package_add form #additional_fields label[for='additional_field_1']"
         ).contains(eholdings_package_additional_fields[0].name);
         cy.get(
-            "#packages_add form #additional_fields label[for='additional_field_2']"
+            "#package_add form #additional_fields label[for='additional_field_2']"
         ).contains(eholdings_package_additional_fields[1].name);
         cy.get(
-            "#packages_add form #additional_fields label[for='additional_field_3']"
+            "#package_add form #additional_fields label[for='additional_field_3']"
         ).contains(eholdings_package_additional_fields[2].name);
         cy.get(
-            "#packages_add form #additional_fields label[for='additional_field_4']"
+            "#package_add form #additional_fields label[for='additional_field_4']"
         ).contains(eholdings_package_additional_fields[3].name);
 
         cy.get("#additional_fields #additional_field_1 .vs__selected").should(
@@ -1606,7 +1604,7 @@ describe("Additional Fields operations", () => {
         ).as("avcategories");
 
         cy.visit("/cgi-bin/koha/erm/eholdings/local/packages");
-        cy.get("#packages_list table tbody tr:first").contains("Edit").click();
+        cy.get("#package_list table tbody tr:first").contains("Edit").click();
         cy.wait("@get-eholdings-package");
         cy.wait(500); // Cypress is too fast! Vue hasn't populated the form yet!
 
@@ -1625,7 +1623,7 @@ describe("Additional Fields operations", () => {
         );
 
         cy.get(
-            "#packages_add form #additional_fields label[for='additional_field_2']"
+            "#package_add form #additional_fields label[for='additional_field_2']"
         )
             .parent()
             .children("input")
@@ -1635,7 +1633,7 @@ describe("Additional Fields operations", () => {
             );
 
         cy.get(
-            "#packages_add form #additional_fields label[for='additional_field_3']"
+            "#package_add form #additional_fields label[for='additional_field_3']"
         )
             .parent()
             .children("input")
@@ -1653,13 +1651,13 @@ describe("Additional Fields operations", () => {
 
         // Clear text field works
         cy.get(
-            "#packages_add form #additional_fields label[for='additional_field_2']"
+            "#package_add form #additional_fields label[for='additional_field_2']"
         )
             .parent()
             .children(".clear_attribute")
             .click();
         cy.get(
-            "#packages_add form #additional_fields label[for='additional_field_2']"
+            "#package_add form #additional_fields label[for='additional_field_2']"
         )
             .parent()
             .children("input")
@@ -1667,16 +1665,16 @@ describe("Additional Fields operations", () => {
 
         // "+New" text field works
         cy.get(
-            "#packages_add form #additional_fields label[for='additional_field_3']"
+            "#package_add form #additional_fields label[for='additional_field_3']"
         ).should("have.length", 1);
         cy.get(
-            "#packages_add form #additional_fields label[for='additional_field_3']"
+            "#package_add form #additional_fields label[for='additional_field_3']"
         )
             .parent()
             .children(".clone_attribute")
             .click();
         cy.get(
-            "#packages_add form #additional_fields label[for='additional_field_3']"
+            "#package_add form #additional_fields label[for='additional_field_3']"
         ).should("have.length", 2);
     });
 });
