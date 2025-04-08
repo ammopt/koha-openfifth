@@ -51,7 +51,6 @@ export default {
         goToResourceShow: Function,
         goToResourceEdit: Function,
         doResourceDelete: Function,
-        goToResourceAdd: Function,
         doResourceSelect: Function,
         getResourceShowURL: Function,
         resourceName: String,
