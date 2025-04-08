@@ -228,6 +228,7 @@ export default {
                         acc.push({
                             title: attr.label,
                             data: attr.name,
+                            type: "date",
                             searchable: true,
                             orderable: true,
                             render: function (data, type, row, meta) {
