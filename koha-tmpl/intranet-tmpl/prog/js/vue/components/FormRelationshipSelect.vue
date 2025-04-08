@@ -7,12 +7,21 @@
         :id="name"
         :reduce="relatedResource => relatedResource[relationshipRequiredKey]"
         :options="relatedResourcesOptions"
+        :required="required && !resource[name]"
         :multiple="allowMultipleChoices"
         :filter-by="filterRelatedResourcesOptions"
         v-model="resource[name]"
     >
         <template v-slot:option="relatedResource">
             {{ relatedResource[relationshipOptionLabelAttr] }}
+        </template>
+        <template #search="{ attributes, events }">
+            <input
+                :required="required && !resource[name]"
+                class="vs__search"
+                v-bind="attributes"
+                v-on="events"
+            />
         </template>
     </v-select>
 </template>
@@ -26,6 +35,7 @@ export default {
         name: String | null,
         allowMultipleChoices: Boolean | null,
         relationshipRequiredKey: String | null,
+        required: Boolean | null,
     },
     data() {
         return {
