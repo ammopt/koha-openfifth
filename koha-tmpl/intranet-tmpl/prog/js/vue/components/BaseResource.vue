@@ -211,7 +211,7 @@ export default {
                 {
                     title: this.$__(
                         "Are you sure you want to remove this %s?"
-                    ).format(this.i18n.displayName.toLowerCase()),
+                    ).format(this.i18n.displayNameLowerCase),
                     message: resourceName,
                     accept_label: this.$__("Yes, delete"),
                     cancel_label: this.$__("No, do not delete"),

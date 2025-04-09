@@ -3,14 +3,13 @@
     <div v-else :id="`${resourceNamePlural}_add`">
         <h2 v-if="resourceToAddOrEdit[idAttr]">
             {{
-                $__("Edit") +
-                " " +
-                i18n.displayNameLowerCase +
-                " #" +
-                resourceToAddOrEdit[idAttr]
+                $__("Edit %s #%s").format(
+                    i18n.displayNameLowerCase,
+                    resourceToAddOrEdit[idAttr]
+                )
             }}
         </h2>
-        <h2 v-else>{{ $__("New") + " " + i18n.displayNameLowerCase }}</h2>
+        <h2 v-else>{{ $__("New %s").format(i18n.displayNameLowerCase) }}</h2>
         <ul
             v-if="formGroupsDisplayMode == 'tabs'"
             class="nav nav-tabs"
