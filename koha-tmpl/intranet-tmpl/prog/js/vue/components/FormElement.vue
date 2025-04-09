@@ -1,4 +1,5 @@
 <template>
+    {{ resource }}
     <label
         v-if="attr.label"
         :for="getElementId"
